@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.rental.domain.*;
 import pl.rental.dto.Dtos.*;
-import pl.rental.repo.Repositories.*;
+import pl.rental.repo.EquipmentRepository;
+import pl.rental.repo.ReservationRepository;
 import pl.rental.web.ApiException;
 
 @Service
@@ -79,14 +80,14 @@ public class ReservationService {
     @Transactional(readOnly = true)
     public StatsDto stats() {
         return new StatsDto(equipmentRepo.count(), reservationRepo.count(),
-            reservationRepo.countByStatus(ReservationStatus.PENDING),
-            reservationRepo.countByStatus(ReservationStatus.CONFIRMED),
-            reservationRepo.sumRevenue(List.of(ReservationStatus.CONFIRMED, ReservationStatus.COMPLETED)));
+                reservationRepo.countByStatus(ReservationStatus.PENDING),
+                reservationRepo.countByStatus(ReservationStatus.CONFIRMED),
+                reservationRepo.sumRevenue(List.of(ReservationStatus.CONFIRMED, ReservationStatus.COMPLETED)));
     }
 
     private ReservationDto toDto(Reservation r) {
         Equipment e = r.getEquipment();
         return new ReservationDto(r.getId(), e.getId(), e.getName(), e.getImageUrl(), r.getUserName(), r.getUserEmail(),
-            r.getStartDate(), r.getEndDate(), r.getTotalPrice(), r.getStatus(), r.getNote(), r.getCreatedAt());
+                r.getStartDate(), r.getEndDate(), r.getTotalPrice(), r.getStatus(), r.getNote(), r.getCreatedAt());
     }
 }

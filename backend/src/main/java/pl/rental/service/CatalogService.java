@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.rental.domain.*;
 import pl.rental.dto.Dtos.*;
-import pl.rental.repo.Repositories.*;
+import pl.rental.repo.CategoryRepository;
+import pl.rental.repo.EquipmentRepository;
+import pl.rental.repo.ReservationRepository;
+import pl.rental.repo.ReviewRepository;
 import pl.rental.web.ApiException;
 
 @Service
@@ -37,13 +40,13 @@ public class CatalogService {
 
     public List<CategoryDto> categories() {
         return categoryRepo.findAll().stream().sorted(Comparator.comparing(Category::getName))
-            .map(CatalogService::toDto).toList();
+                .map(CatalogService::toDto).toList();
     }
 
     @Transactional
     public CategoryDto saveCategory(Long id, CategoryRequest req) {
         Category c = id == null ? new Category()
-            : categoryRepo.findById(id).orElseThrow(() -> ApiException.notFound("Kategoria"));
+                : categoryRepo.findById(id).orElseThrow(() -> ApiException.notFound("Kategoria"));
         c.setName(req.name().trim());
         c.setIcon(req.icon());
         return toDto(categoryRepo.save(c));
@@ -69,7 +72,7 @@ public class CatalogService {
             if (q != null && !q.isBlank()) {
                 String like = "%" + q.trim().toLowerCase() + "%";
                 p.add(cb.or(cb.like(cb.lower(root.get("name")), like),
-                            cb.like(cb.lower(cb.coalesce(root.<String>get("description"), "")), like)));
+                        cb.like(cb.lower(cb.coalesce(root.<String>get("description"), "")), like)));
             }
             if (categoryId != null) p.add(cb.equal(root.get("category").get("id"), categoryId));
             if (minPrice != null) p.add(cb.ge(root.<BigDecimal>get("pricePerDay"), minPrice));
@@ -81,16 +84,16 @@ public class CatalogService {
         boolean byDates = start != null && end != null && !end.isBefore(start);
 
         List<EquipmentDto> result = equipmentRepo.findAll(spec).stream()
-            .map(e -> toDto(e, ratings, byDates ? availableUnits(e, start, end) : null))
-            .filter(d -> minRating == null || d.avgRating() >= minRating)
-            .filter(d -> !byDates || d.availableUnits() > 0)
-            .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
+                .map(e -> toDto(e, ratings, byDates ? availableUnits(e, start, end) : null))
+                .filter(d -> minRating == null || d.avgRating() >= minRating)
+                .filter(d -> !byDates || d.availableUnits() > 0)
+                .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
 
         Comparator<EquipmentDto> cmp = switch (sort == null ? "" : sort) {
             case "price_asc" -> Comparator.comparing(EquipmentDto::pricePerDay);
             case "price_desc" -> Comparator.comparing(EquipmentDto::pricePerDay).reversed();
             case "rating" -> Comparator.comparingDouble(EquipmentDto::avgRating).reversed()
-                .thenComparing(Comparator.comparingLong(EquipmentDto::reviewCount).reversed());
+                    .thenComparing(Comparator.comparingLong(EquipmentDto::reviewCount).reversed());
             case "name" -> Comparator.comparing(EquipmentDto::name, String.CASE_INSENSITIVE_ORDER);
             default -> Comparator.comparing(EquipmentDto::id).reversed();
         };
@@ -145,8 +148,8 @@ public class CatalogService {
     public List<ReviewDto> reviews(Long equipmentId) {
         find(equipmentId);
         return reviewRepo.findByEquipmentIdOrderByCreatedAtDesc(equipmentId).stream()
-            .map(r -> new ReviewDto(r.getId(), r.getUserName(), r.getRating(), r.getComment(), r.getCreatedAt()))
-            .toList();
+                .map(r -> new ReviewDto(r.getId(), r.getUserName(), r.getRating(), r.getComment(), r.getCreatedAt()))
+                .toList();
     }
 
     @Transactional
@@ -193,7 +196,7 @@ public class CatalogService {
     static EquipmentDto toDto(Equipment e, Map<Long, double[]> ratings, Integer availableUnits) {
         double[] r = ratings.getOrDefault(e.getId(), new double[]{0, 0});
         return new EquipmentDto(e.getId(), e.getName(), e.getDescription(), toDto(e.getCategory()),
-            e.getPricePerDay(), e.getQuantity(), e.getImageUrl(), e.isActive(),
-            Math.round(r[0] * 10) / 10.0, (long) r[1], availableUnits);
+                e.getPricePerDay(), e.getQuantity(), e.getImageUrl(), e.isActive(),
+                Math.round(r[0] * 10) / 10.0, (long) r[1], availableUnits);
     }
 }
