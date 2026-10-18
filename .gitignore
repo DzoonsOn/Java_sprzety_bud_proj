@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Projekt ###
+node_modules/
+out/
+*.log
+.env.local
+.next/
+next-env.d.ts

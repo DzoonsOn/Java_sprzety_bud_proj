@@ -1,0 +1,60 @@
+{
+  "realm": "rental",
+  "displayName": "Wypożyczalnia sprzętu budowlanego",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": false,
+  "loginWithEmailAllowed": true,
+  "resetPasswordAllowed": true,
+  "internationalizationEnabled": true,
+  "supportedLocales": ["pl", "en"],
+  "defaultLocale": "pl",
+  "roles": {
+    "realm": [
+      { "name": "admin", "description": "Administrator wypożyczalni" },
+      { "name": "user", "description": "Klient" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "rental-frontend",
+      "name": "Rental Frontend",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "protocol": "openid-connect",
+      "rootUrl": "http://localhost:3000",
+      "baseUrl": "/",
+      "redirectUris": ["http://localhost:3000/*"],
+      "webOrigins": ["http://localhost:3000"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:3000/*"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@rental.local",
+      "firstName": "Adam",
+      "lastName": "Administrator",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "admin", "temporary": false }],
+      "realmRoles": ["admin", "user"]
+    },
+    {
+      "username": "klient",
+      "email": "klient@rental.local",
+      "firstName": "Karol",
+      "lastName": "Klient",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "klient", "temporary": false }],
+      "realmRoles": ["user"]
+    }
+  ]
+}

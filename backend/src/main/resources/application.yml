@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: rental-backend
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/rental}
+    username: ${DB_USER:rental}
+    password: ${DB_PASSWORD:rental}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8081/realms/rental}
+
+app:
+  cors-origins: ${CORS_ORIGINS:http://localhost:3000}

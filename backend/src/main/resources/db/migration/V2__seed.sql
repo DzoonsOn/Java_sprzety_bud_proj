@@ -1,0 +1,33 @@
+INSERT INTO category (name, icon) VALUES
+    ('Młoty i kruszarki', '🔨'),
+    ('Zagęszczarki', '🚜'),
+    ('Agregaty i zasilanie', '⚡'),
+    ('Rusztowania i drabiny', '🪜'),
+    ('Betoniarki i mieszarki', '🏗️'),
+    ('Elektronarzędzia', '🔧');
+
+INSERT INTO equipment (name, description, category_id, price_per_day, quantity, image_url) VALUES
+    ('Młot wyburzeniowy Hilti TE 3000', 'Ciężki młot wyburzeniowy do kucia betonu i muru. Moc 1700 W, energia udaru 65 J. W zestawie dłuto płaskie i szpiczaste.',
+     1, 180.00, 3, 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800'),
+    ('Młotowiertarka SDS-Max Bosch GBH 8', 'Profesjonalna młotowiertarka do wierceń w betonie do Ø 45 mm. Walizka, uchwyt boczny i ogranicznik głębokości.',
+     1, 90.00, 5, 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=800'),
+    ('Zagęszczarka płytowa 90 kg', 'Zagęszczarka jednokierunkowa z silnikiem benzynowym do kostki brukowej, podbudów i wykopów. Szerokość płyty 50 cm.',
+     2, 140.00, 4, 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=800'),
+    ('Ubijak (skoczek) wibracyjny 70 kg', 'Ubijak do zagęszczania gruntu w wąskich wykopach i przy fundamentach. Silnik 4-suwowy Honda.',
+     2, 160.00, 2, 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800'),
+    ('Agregat prądotwórczy 5 kW', 'Przenośny agregat jednofazowy 230 V, zbiornik 25 l, praca do 10 h na jednym tankowaniu. Idealny na plac budowy.',
+     3, 120.00, 4, 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=800'),
+    ('Agregat trójfazowy 12 kW', 'Mocny agregat 230/400 V z wyciszoną obudową. Zasilanie maszyn budowlanych i oświetlenia.',
+     3, 260.00, 2, 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800'),
+    ('Rusztowanie fasadowe 50 m²', 'Kompletny zestaw rusztowania ramowego: ramy, pomosty, poręcze, stopy i kotwy. Transport do uzgodnienia.',
+     4, 150.00, 6, 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800'),
+    ('Drabina przegubowa teleskopowa 4,7 m', 'Wielofunkcyjna drabina aluminiowa, udźwig 150 kg, 4 tryby pracy.',
+     4, 35.00, 10, 'https://images.unsplash.com/photo-1581141849291-1125c7b692b5?w=800'),
+    ('Betoniarka 160 l', 'Betoniarka z silnikiem elektrycznym 650 W, bęben 160 l, koło zębate stalowe.',
+     5, 55.00, 6, 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800'),
+    ('Mieszarka do zapraw i klejów', 'Mieszadło dwuwrzecionowe 1800 W do zapraw, tynków, klejów i wylewek. Dwa mieszadła w komplecie.',
+     5, 45.00, 5, 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800'),
+    ('Szlifierka do betonu 230 mm', 'Szlifierka do betonu i wylewek z podłączeniem odkurzacza przemysłowego. 2100 W.',
+     6, 110.00, 3, 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800'),
+    ('Pilarka do betonu spalinowa', 'Przecinarka do betonu i asfaltu, tarcza Ø 350 mm, głębokość cięcia do 125 mm.',
+     6, 200.00, 2, 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=800');
